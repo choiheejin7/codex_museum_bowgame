@@ -12,9 +12,40 @@
   const stop = document.querySelector('#stop-camera');
   let stream = null;
   let request = 0;
+  let scanTimer = null;
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  function scanFrame(current) {
+    if (current !== request || !stream || !modal.open || document.hidden) return;
+    try {
+      if (video.readyState >= 2 && video.videoWidth && context && typeof jsQR === 'function') {
+        const ratio = Math.min(1, 720 / video.videoWidth);
+        canvas.width = Math.round(video.videoWidth * ratio);
+        canvas.height = Math.round(video.videoHeight * ratio);
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const frame = context.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(frame.data, frame.width, frame.height, { inversionAttempts: 'attemptBoth' });
+        if (code) {
+          const target = resolveMuseumQR(code.data);
+          if (target) {
+            status.textContent = 'QR을 인식했어요. 문제로 이동합니다.';
+            stopCamera();
+            location.assign(target);
+            return;
+          }
+          status.textContent = '이 게임의 문제 QR이 아니에요. 박물관 퀴즈 QR을 비춰주세요.';
+        }
+      }
+    } catch {
+      status.textContent = 'QR을 읽기 어려워요. 밝은 곳에서 QR 전체가 보이도록 비춰주세요.';
+    }
+    scanTimer = setTimeout(() => scanFrame(current), 180);
+  }
 
   function stopCamera() {
     request++;
+    clearTimeout(scanTimer);
+    scanTimer = null;
     if (stream) stream.getTracks().forEach(track => track.stop());
     stream = null;
     video.srcObject = null;
@@ -70,7 +101,9 @@
       video.hidden = false;
       await video.play();
       if (current !== request) return;
-      status.textContent = '카메라가 연결되었어요.';
+      status.textContent = '카메라가 연결되었어요. QR 전체를 비추면 문제로 자동 이동합니다.';
+      if (typeof jsQR !== 'function') { status.textContent = 'QR 인식 기능을 불러오지 못했어요. 새로고침 후 다시 연결해주세요.'; }
+      else scanFrame(current);
     } catch (error) {
       if (current !== request) return;
       stopCamera();

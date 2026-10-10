@@ -2,9 +2,9 @@ const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/st
 const code=fs.readFileSync(__dirname+'/js/scanner.js','utf8');
 function setup(getUserMedia,secure=true){
  const elements=new Map(); const make=()=>({hidden:false,disabled:false,open:false,handlers:{},addEventListener(t,f){this.handlers[t]=f},setAttribute(){},showModal(){this.open=true},close(){this.open=false;this.handlers.close?.()},play:async()=>{}});
- const document={hidden:false,handlers:{},querySelector(id){if(!elements.has(id))elements.set(id,make());return elements.get(id)},addEventListener(t,f){this.handlers[t]=f}};
+ const document={createElement:()=>({getContext:()=>null}),hidden:false,handlers:{},querySelector(id){if(!elements.has(id))elements.set(id,make());return elements.get(id)},addEventListener(t,f){this.handlers[t]=f}};
  const window={isSecureContext:secure,addEventListener(){}};
- vm.runInNewContext(code,{document,window,navigator:{mediaDevices:{getUserMedia}}});
+ vm.runInNewContext(code,{document,window,navigator:{mediaDevices:{getUserMedia}},setTimeout,clearTimeout});
  const el=id=>document.querySelector('#'+id),click=id=>el(id).handlers.click();
  click('open-scanner');return {el,click,document};
 }

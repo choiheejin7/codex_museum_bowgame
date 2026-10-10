@@ -38,14 +38,14 @@ PNG를 assets/images에 넣고 image 경로를 해당 PNG로 바꾸세요. 수�
 | QR | 아이템 | 주소 |
 |---|---|---|
 | A | 줌통 | https://YOUR-DOMAIN/quiz.html?id=grip |
-| B | 위쪽 활채 | https://YOUR-DOMAIN/quiz.html?id=upper |
-| C | 아래쪽 활채 | https://YOUR-DOMAIN/quiz.html?id=lower |
+| B | 긴 활채 | https://YOUR-DOMAIN/quiz.html?id=upper |
+| C | 활고자 | https://YOUR-DOMAIN/quiz.html?id=lower |
 | D | 시위 | https://YOUR-DOMAIN/quiz.html?id=string |
 | E | 살대 | https://YOUR-DOMAIN/quiz.html?id=shaft |
 | F | 화살촉 | https://YOUR-DOMAIN/quiz.html?id=arrowhead |
 | G | 깃과 오늬 | https://YOUR-DOMAIN/quiz.html?id=feather |
 
-하위 폴더에 배포하면 주소에도 해당 폴더를 포함하세요. 휴대폰 기본 카메라나 QR 앱으로 링크를 열면 됩니다. 수집북의 QR 스캔 → 카메라 연결에서 카메라 미리보기를 실행할 수 있습니다. 현재 QR 자동 인식은 포함하지 않으며, QR 테스트 버튼에서 문제를 선택합니다. 카메라는 HTTPS 또는 localhost에서 권한을 허용해 사용하세요. 닫기·테스트 전환·페이지 이탈 시 카메라를 중지합니다. localhost는 실제 배포용 QR 주소가 아닙니다.
+하위 폴더에 배포하면 주소에도 해당 폴더를 포함하세요. 휴대폰 기본 카메라나 QR 앱으로 링크를 열면 됩니다. 수집북의 QR 스캔 → 카메라 연결에서 카메라 미리보기를 실행할 수 있습니다. 카메라로 QR을 자동 인식하면 해당 독립 퀴즈로 이동합니다. QR 테스트 버튼으로도 문제를 선택할 수 있습니다. 카메라는 HTTPS 또는 localhost에서 권한을 허용해 사용하세요. 닫기·테스트 전환·페이지 이탈 시 카메라를 중지합니다. localhost는 실제 배포용 QR 주소가 아닙니다.
 
 진행도는 같은 사이트 주소의 같은 브라우저에 저장됩니다. QR을 매번 같은 브라우저로 열어야 이어집니다. 장치/브라우저 간 동기화는 없습니다.
 
@@ -55,3 +55,9 @@ PNG를 assets/images에 넣고 image 경로를 해당 PNG로 바꾸세요. 수�
 
 브라우저에서 C → F → A → D → B → G → E 순서로 모든 문제를 풀고 완료 화면 도달을 확인했습니다. 오답 후 재도전, 새로고침 복원, 중복 방지, 힌트, 수집북 다시 보기, 초기화 및 잘못된 id 안내를 확인했습니다. 360px와 430px 화면을 점검했습니다. 추가 저장 예외와 초기화 취소/확인은 node verify.cjs로 검증합니다.
 
+
+## 독립 퀴즈와 카메라 QR 인식
+
+quizzes/qr-codes.html에서 7개의 QR을 확인하고 출력할 수 있습니다. 각 QR은 quizzes/아이템ID.html에 연결됩니다. 문제 화면에는 수집북으로 돌아가기 버튼이 있고 정답이면 museumBowGame에 아이템을 저장합니다. 마지막 아이템 획득 후 완료 화면으로 이동할 수 있습니다.
+
+QR 해석은 로컬에 포함한 jsQR 1.4.0을 사용합니다. js/vendor/jsQR-LICENSE.txt에 라이선스가 있습니다. 카메라 화면은 외부 서버로 전송하지 않습니다.

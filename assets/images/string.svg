@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160"><path d="M100 20 C38 20 38 138 100 138 C159 138 159 20 100 20 M100 20 L100 138" fill="none" stroke="#b38f59" stroke-width="3"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><g transform="translate(-16 -16) scale(1.2)">
+
+<defs>
+<path id="cord" d="M37 40 C52 63 27 98 49 119 S78 82 91 91 S106 133 121 107 S113 64 124 59"/>
+<path id="loops" d="M37 40 C24 32 21 17 27 20 C36 23 44 35 37 40 M124 59 C134 52 143 55 139 61 C135 67 129 65 124 59"/>
+</defs>
+<g transform="translate(-3.07 7.15)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<use href="#cord" stroke="#a67642" stroke-width="3.2"/><use href="#loops" stroke="#a67642" stroke-width="2"/>
+<use href="#cord" stroke="#d5aa6e" stroke-width="1"/>
+<path d="M33 39l8-3m-7 6l8-3 M121 57l2 7m2-8l2 7" stroke="#795332" stroke-width="2"/>
+</g></g></svg>

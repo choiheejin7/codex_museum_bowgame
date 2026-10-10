@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160"><path d="M72 23 Q144 77 106 136 Q101 146 94 137" fill="none" stroke="#a67642" stroke-width="9" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160"><g transform="translate(30 24) scale(0.7)"><defs>
+<g id="tip">
+<path d="M75 126 L81 62 Q82 48 97 37 L117 23 Q125 20 126 26 Q126 30 121 35 L102 56 L100 126Z" fill="#a67642" stroke="#795332" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M85 65 L104 69" fill="none" stroke="#573f2c" stroke-width="5" stroke-linecap="round"/>
+<path d="M84 80 L100 83" fill="none" stroke="#d5aa6e" stroke-width="3" stroke-linecap="round"/>
+<path d="M83 114 L87 87 M90 54 L108 36" fill="none" stroke="#d5aa6e" stroke-width="2" stroke-linecap="round"/>
+</g>
+</defs>
+<g transform="translate(23 -5) rotate(12 100 80)"><use href="#tip"/></g>
+<g transform="translate(-15 7) rotate(-12 100 80)"><use href="#tip"/></g></g></svg>

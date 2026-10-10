@@ -36,7 +36,7 @@ function renderCollection() {
 }
 MuseumData.items.forEach(item => {
   const link = document.createElement('a');
-  link.href = `quiz.html?id=${encodeURIComponent(item.id)}`;
+  link.href = `quizzes/${encodeURIComponent(item.id)}.html`;
   link.textContent = `${item.name} QR`;
   document.querySelector('#dev-links')?.append(link);
 });
