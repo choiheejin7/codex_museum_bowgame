@@ -6,14 +6,14 @@ function setup(getUserMedia,secure=true){
  const window={isSecureContext:secure,addEventListener(){}};
  vm.runInNewContext(code,{document,window,navigator:{mediaDevices:{getUserMedia}},setTimeout,clearTimeout});
  const el=id=>document.querySelector('#'+id),click=id=>el(id).handlers.click();
- click('open-scanner');return {el,click,document};
+ return {el,click,document};
 }
 (async()=>{
  let stopped=0,options;const stream={getTracks:()=>[{stop(){stopped++}}]};
- let s=setup(async arg=>{options=arg;return stream});await s.click('connect-camera');assert.equal(s.el('camera-preview').srcObject,stream);assert.equal(options.audio,false);s.click('open-qr-test');assert.equal(stopped,1);assert.equal(s.el('qr-test-panel').hidden,false);
- let resolve;s=setup(()=>new Promise(r=>resolve=r));const pending=s.click('connect-camera');s.click('close-scanner');resolve(stream);await pending;assert.equal(stopped,2);assert.equal(s.el('camera-preview').srcObject,null);
- s=setup(async()=>{throw {name:'NotAllowedError'}});await s.click('connect-camera');assert.match(s.el('camera-status').textContent,/권한/);assert.equal(s.el('connect-camera').disabled,false);
- s=setup(null,false);await s.click('connect-camera');assert.match(s.el('camera-status').textContent,/HTTPS/);
- s=setup(async()=>stream);await s.click('connect-camera');s.document.hidden=true;s.document.handlers.visibilitychange();assert.equal(stopped,3);
- console.log('PASS: camera attach, audio disabled, test-switch cleanup, late permission cleanup, denied/unsupported messages, background cleanup');
+ let s=setup(async arg=>{options=arg;return stream});await s.click('open-scanner');assert.equal(s.el('camera-preview').srcObject,stream);assert.equal(options.audio,false);s.click('stop-camera');assert.equal(stopped,1);assert.equal(s.el('scanner-dialog').open,false);
+ let resolve;s=setup(()=>new Promise(r=>resolve=r));const pending=s.click('open-scanner');s.click('stop-camera');resolve(stream);await pending;assert.equal(stopped,2);assert.equal(s.el('camera-preview').srcObject,null);
+ s=setup(async()=>{throw {name:'NotAllowedError'}});await s.click('open-scanner');assert.match(s.el('camera-status').textContent,/권한/);
+ s=setup(null,false);await s.click('open-scanner');assert.match(s.el('camera-status').textContent,/HTTPS/);
+ s=setup(async()=>stream);await s.click('open-scanner');s.document.hidden=true;s.document.handlers.visibilitychange();assert.equal(stopped,3);
+ console.log('PASS: camera attach, audio disabled, return-button cleanup, late permission cleanup, denied/unsupported messages, background cleanup');
 })();

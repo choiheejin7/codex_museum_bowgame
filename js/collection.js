@@ -34,12 +34,6 @@ function renderCollection() {
     });
   }
 }
-MuseumData.items.forEach(item => {
-  const link = document.createElement('a');
-  link.href = `quizzes/${encodeURIComponent(item.id)}.html`;
-  link.textContent = `${item.name} QR`;
-  document.querySelector('#dev-links')?.append(link);
-});
 document.querySelector('#close-dialog').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
 // 완료 후 수집북을 다시 볼 때 자동 이동이 반복되지 않도록 명시적인 보기 URL을 사용합니다.

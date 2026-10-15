@@ -12,6 +12,7 @@ document.querySelector('form').addEventListener('submit',event=>{
  const saved=GameStorage.acquire(id);
  if(!saved.ok){message.textContent='진행도를 저장할 수 없어요. 사이트 저장 설정을 확인하고 다시 시도해주세요.';return;}
  const item=MuseumData.items.find(item=>item.id===id);
- message.textContent=saved.isNew?'✓ 정답입니다! '+item.name+' 획득!':'✓ 정답입니다! 이미 획득한 아이템입니다.';
- if(saved.complete){const back=document.querySelector('.back');back.href='../complete.html';back.textContent='완성된 활과 화살 보기';}
+ message.textContent='';
+ message.className='preview-message';
+ showItemReward(item);
 });
